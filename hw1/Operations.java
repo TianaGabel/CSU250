@@ -1,4 +1,4 @@
-package cs250.hw1;
+package hw1;
 /*Author: Tatiana Gabel
  * Class: CS250
  * Homework 1 numbering systems and representations
