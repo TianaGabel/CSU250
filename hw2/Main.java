@@ -92,7 +92,20 @@ public class Main {
         //Average sum of the elements ???
 
         //TASK 3
-        
+        //Allocate TreeSet for size 
+        //Allocate LinkedList with size and fill with 0 to size
+
+        //experiments loop
+        //generate random number
+        //start timer
+        //TreeSet.contains(number)
+        //End timer
+
+        //start other timer
+        //Ll contains
+        //End other timer
+        //Record data to totals + file
+        //End experiments
 
     }
 }
