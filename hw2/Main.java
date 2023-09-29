@@ -14,37 +14,8 @@ public class Main {
         List<Long> lastTenData;
 
         //TASK 1: Performance of programs with and without caching
-
-        //loop 2: Non-Volatile
-        totalSum = 0;
-        totalTime = 0;
-        nonVolatileData = new ArrayList<Long>();
-        //Experiment counter
-        for (int j = 0; j < numExperiments; j++){
-            //Start timer
-            long endTime;
-            long runningTotal = 0;
-            int i = 0; //Variable is declared here
-            long startTime = System.nanoTime();
-            
-            while(i < size){
-                //running total of addition and subtraction operations using the loop variable
-                if(i % 2 == 0){
-                    runningTotal += i;
-                } else {
-                    runningTotal -= i;
-                }
-                i++;
-            }
-            //End Timer
-            endTime = System.nanoTime();
-            volatileData.add(new Long(endTime-startTime)); //Store individual data
-            totalTime += (endTime-startTime); // in Nano seconds
-            totalSum += runningTotal;
-        }
-        //TODO it might be worth writing this information to a .csv file so I can format it
-        long averageTimeNonVolatile = totalTime / numExperiments;
-        long averageSumNonVolatile = totalSum / numExperiments;
+        task1(numExperiments,size,"Volatile"); //TODO this will not work
+        task1(numExperiments,size,"Non-Volatile");
 
         System.out.println("Average");
 
@@ -98,37 +69,49 @@ public class Main {
 
     }
 
-    public static ArrayList<Long> task1(int numExperiments, int size){
+    public static Data task1(int numExperiments, int size, String loopVar){
         //loop
         long totalSum = 0;
         long totalTime = 0;
-        ArrayList<Long> data = new ArrayList<Long>();
+        ArrayList<Long> timeData = new ArrayList<Long>();
         //Experiment counter
         for (int j = 0; j < numExperiments; j++){
             //Start timer
             long endTime;
+            long startTime = 0;
             long runningTotal = 0;
             //v must be declared as part of the class
-            long startTime = System.nanoTime();
-            
-            while(v < size){
-                //running total of addition and subtraction operations using the loop variable
-                if(v % 2 == 0){
-                    runningTotal += v;
-                } else {
-                    runningTotal -= v;
+            if (loopVar.equals("Volatile")){
+                startTime = System.nanoTime();
+                while(v < size){
+                    //running total of addition and subtraction operations using the loop variable
+                    if(v % 2 == 0){
+                        runningTotal += v;
+                    } else {
+                        runningTotal -= v;
+                    }
+                    v++;
                 }
-                v++;
+            } else if (loopVar.equals("Non-Volatile")){
+                int i = 0;
+                startTime = System.nanoTime();
+                while(i < size){
+                    //running total of addition and subtraction operations using the loop variable
+                    if(i % 2 == 0){
+                        runningTotal += i;
+                    } else {
+                        runningTotal -= i;
+                    }
+                    i++;
+                }
             }
             //End Timer
             endTime = System.nanoTime();
-            data.add(new Long(endTime-startTime)); //Store individual data
+            timeData.add(new Long(endTime-startTime)); //Store individual data
             totalTime += (endTime-startTime); // in Nano seconds
             totalSum += runningTotal;
         }
-        //TODO it might be worth writing this information to a .csv file so I can format it
-        long averageTimeVolatile = totalTime / numExperiments;
-        long averageSumVolatile = totalSum / numExperiments;
+        Data data = new Data(timeData,totalTime,totalSum);
         return data;
     }
 }

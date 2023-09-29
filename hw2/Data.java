@@ -4,11 +4,20 @@ public class Data {
     ArrayList<Long> individualTimes;
     long totalTime;
     long totalSum;
+
+    //for task 1 and 2
     public Data(ArrayList<Long> individualTimes, long totalTime, long totalSum){
         this.individualTimes = individualTimes;
         this.totalTime = totalTime;
         this.totalSum = totalSum;
     }
+
+    //for task 3
+    public Data(ArrayList<Long> individualTimes, long totalTime){
+        this.individualTimes = individualTimes;
+        this.totalTime = totalTime;
+    }
+
 
     public ArrayList<Long> getTimeData(){
         return individualTimes;
