@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Main {
     private static volatile int v = 0;
@@ -7,47 +8,26 @@ public class Main {
     public static void main(String[] args){
         int size = Integer.parseInt(args[0]);
         int numExperiments = Integer.parseInt(args[1]);
-        String seed = args[2];
-        List<Long> volatileData;
-        List<Long> nonVolatileData;
-        List<Long> firstTenData;
-        List<Long> lastTenData;
+        Long seed = Long.parseLong(args[2]);
+        Data volatileData;
+        Data nonVolatileData;
+        Data firstTenData;
+        Data lastTenData;
 
         //TASK 1: Performance of programs with and without caching
-        task1(numExperiments,size,"Volatile"); //TODO this will not work
-        task1(numExperiments,size,"Non-Volatile");
+        volatileData = task1(numExperiments,size,"Volatile");
+        nonVolatileData = task1(numExperiments,size,"Non-Volatile");
 
-        System.out.println("Average");
+        System.out.println("Task 1");
+        //Regular: time seconds
+        //Avg regular sum sum
 
         //TASK 2
-        Integer[] ronaldo = new Integer[size];
+        Integer[] ronaldo = generateRandomArray(size, seed);
         //populate the array with random numbers
 
-        Long firstTenTotalTime = (long)0;
-        Long lastTenTotalTime = (long)0;
-        firstTenData = new ArrayList<Long>();
-        lastTenData = new ArrayList<Long>();
-        //Experiment counter
-        for (int j = 0; j < numExperiments; j++){
-            //Part 1: Accessing the first 10%
-            //Start timer
-            long endTime;
-            long startTime = System.nanoTime();
-            //Access first 10%
-            //Stop timer
-            endTime = System.nanoTime();
-            firstTenData.add(new Long(endTime-startTime));
-            firstTenTotalTime += (endTime-startTime);
-
-            //Part 2: Accessing a random value in the last 10%
-            //start other timer
-            startTime = System.nanoTime();
-            //Access random element in the last 10% of the array
-            //end other timer
-            endTime = System.nanoTime();
-            lastTenData.add(new Long(endTime-startTime));
-            lastTenTotalTime += (endTime-startTime);
-        }
+        firstTenData = task2(numExperiments, "First Ten");
+        lastTenData = task2(numExperiments, "Last Ten");
 
         //Average sum of the elements ???
 
@@ -110,6 +90,49 @@ public class Main {
             timeData.add(new Long(endTime-startTime)); //Store individual data
             totalTime += (endTime-startTime); // in Nano seconds
             totalSum += runningTotal;
+        }
+        Data data = new Data(timeData,totalTime,totalSum);
+        return data;
+    }
+
+    public static Integer[] generateRandomArray(int size, long seed){
+        Integer[] ray = new Integer[size];
+        Random rand = new Random(seed);
+
+        return ray;
+    }
+
+    public static Data task2(int numExperiments, String accessPart){
+        Long totalTime = (long)0;
+        Long totalSum = (long)0;
+        ArrayList<Long> timeData = new ArrayList<>();
+        //Experiment counter
+        if (accessPart.equals("First Ten")){
+            for (int j = 0; j < numExperiments; j++){
+                //Start timer
+                long endTime;
+                long startTime = System.nanoTime();
+                //Access first 10%
+
+
+                //Stop timer
+                endTime = System.nanoTime();
+                timeData.add(new Long(endTime-startTime));
+                totalTime += (endTime-startTime);
+            }
+        }else if (accessPart.equals("Last Ten")){
+            for (int j = 0; j < numExperiments; j++){
+            //Start timer
+            long endTime;
+            long startTime = System.nanoTime();
+            //Access element in last 10%
+
+
+            //Stop timer
+            endTime = System.nanoTime();
+            timeData.add(new Long(endTime-startTime));
+            totalTime += (endTime-startTime);
+            }
         }
         Data data = new Data(timeData,totalTime,totalSum);
         return data;
