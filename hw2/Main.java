@@ -98,11 +98,11 @@ public class Main {
 
     }
 
-    public static ArrayList<Long> task1(ArrayList<Long> data, ){
-        //loop 1: Volatile
+    public static ArrayList<Long> task1(int numExperiments, int size){
+        //loop
         long totalSum = 0;
         long totalTime = 0;
-        data = new ArrayList<Long>();
+        ArrayList<Long> data = new ArrayList<Long>();
         //Experiment counter
         for (int j = 0; j < numExperiments; j++){
             //Start timer
@@ -129,5 +129,6 @@ public class Main {
         //TODO it might be worth writing this information to a .csv file so I can format it
         long averageTimeVolatile = totalTime / numExperiments;
         long averageSumVolatile = totalSum / numExperiments;
+        return data;
     }
 }
