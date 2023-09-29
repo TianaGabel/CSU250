@@ -2,13 +2,14 @@ import java.util.ArrayList;
 
 public class Data {
     ArrayList<Long> individualTimes;
-    long totalTime;
+    double totalTime;
     long totalSum;
 
     //for task 1 and 2
     public Data(ArrayList<Long> individualTimes, long totalTime, long totalSum){
         this.individualTimes = individualTimes;
-        this.totalTime = totalTime;
+        //in Nano seconds we need to convert to seconds
+        this.totalTime = totalTime * (Math.pow(10,-9));
         this.totalSum = totalSum;
     }
 
@@ -23,7 +24,7 @@ public class Data {
         return individualTimes;
     }
 
-    public long getTotalTime(){
+    public double getTotalTime(){
         return totalTime;
     }
 
@@ -31,11 +32,11 @@ public class Data {
         return totalSum;
     }
 
-    public float getAverageTime(int numExperiments){
-        return (float) this.totalTime / numExperiments;
+    public double getAverageTime(int numExperiments){
+        return (double) this.totalTime / numExperiments;
     }
 
-    public float getAverageSum(int numExperiments){
-        return (float) this.totalSum / numExperiments;
+    public double getAverageSum(int numExperiments){
+        return (double) this.totalSum / numExperiments;
     }
 }

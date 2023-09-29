@@ -6,6 +6,11 @@ public class Main {
     private static volatile int v = 0;
 
     public static void main(String[] args){
+        //TODO delete this later
+        args = new String[3];
+        args[0] = "2500000";
+        args[1] = "1";
+        args[2] = "42";
         int size = Integer.parseInt(args[0]);
         int numExperiments = Integer.parseInt(args[1]);
         Long seed = Long.parseLong(args[2]);
@@ -18,16 +23,19 @@ public class Main {
         volatileData = task1(numExperiments,size,"Volatile");
         nonVolatileData = task1(numExperiments,size,"Non-Volatile");
 
+        //TODO this is in nanoseconds not seconds
         System.out.println("Task 1");
-        //Regular: time seconds
-        //Avg regular sum sum
+        System.out.println("Regular: " + nonVolatileData.getAverageTime(numExperiments));
+        System.out.println("Volatile: " + volatileData.getAverageTime(numExperiments));
+        System.out.println("Avg regular sum: " + nonVolatileData.getAverageSum(numExperiments));
+        System.out.println("Avg volatile sum: " + volatileData.getAverageSum(numExperiments));
+        System.out.println("\n");
 
         //TASK 2
-        Integer[] ronaldo = generateRandomArray(size, seed);
+        Integer[] randomArray = generateRandomArray(size, seed);
         //populate the array with random numbers
-
-        firstTenData = task2(numExperiments, "First Ten");
-        lastTenData = task2(numExperiments, "Last Ten");
+        firstTenData = task2(numExperiments, randomArray, "First Ten");
+        lastTenData = task2(numExperiments, randomArray,"Last Ten");
 
         //Average sum of the elements ???
 
@@ -98,11 +106,13 @@ public class Main {
     public static Integer[] generateRandomArray(int size, long seed){
         Integer[] ray = new Integer[size];
         Random rand = new Random(seed);
-
+        for (int i =0; i<size;i++){
+            ray[i] = rand.nextInt();
+        }
         return ray;
     }
 
-    public static Data task2(int numExperiments, String accessPart){
+    public static Data task2(int numExperiments, Integer[] randArray, String accessPart){
         Long totalTime = (long)0;
         Long totalSum = (long)0;
         ArrayList<Long> timeData = new ArrayList<>();
@@ -113,7 +123,7 @@ public class Main {
                 long endTime;
                 long startTime = System.nanoTime();
                 //Access first 10%
-
+                //TODO
 
                 //Stop timer
                 endTime = System.nanoTime();
@@ -122,16 +132,16 @@ public class Main {
             }
         }else if (accessPart.equals("Last Ten")){
             for (int j = 0; j < numExperiments; j++){
-            //Start timer
-            long endTime;
-            long startTime = System.nanoTime();
-            //Access element in last 10%
+                //Start timer
+                long endTime;
+                long startTime = System.nanoTime();
+                //Access element in last 10%
+                //TODO
 
-
-            //Stop timer
-            endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime));
-            totalTime += (endTime-startTime);
+                //Stop timer
+                endTime = System.nanoTime();
+                timeData.add(new Long(endTime-startTime));
+                totalTime += (endTime-startTime);
             }
         }
         Data data = new Data(timeData,totalTime,totalSum);
