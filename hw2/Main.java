@@ -23,10 +23,9 @@ public class Main {
         volatileData = task1(numExperiments,size,"Volatile");
         nonVolatileData = task1(numExperiments,size,"Non-Volatile");
 
-        //TODO this is in nanoseconds not seconds
         System.out.println("Task 1");
-        System.out.println("Regular: " + nonVolatileData.getAverageTime(numExperiments));
-        System.out.println("Volatile: " + volatileData.getAverageTime(numExperiments));
+        System.out.println("Regular:  " + (nonVolatileData.getAverageTime(numExperiments) * (Math.pow(10,-9))) + " seconds");
+        System.out.println("Volatile: " + (volatileData.getAverageTime(numExperiments) * (Math.pow(10,-9))) + " seconds");
         System.out.println("Avg regular sum: " + nonVolatileData.getAverageSum(numExperiments));
         System.out.println("Avg volatile sum: " + volatileData.getAverageSum(numExperiments));
         System.out.println("\n");
@@ -36,6 +35,12 @@ public class Main {
         //populate the array with random numbers
         firstTenData = task2(numExperiments, randomArray, "First Ten");
         lastTenData = task2(numExperiments, randomArray,"Last Ten");
+
+        System.out.println("Task 2");
+        System.out.println("Avg time to access known element:  ");
+        System.out.println("Avg time to access random element: ");
+        System.out.println("Sum: " + (firstTenData.getAverageSum(numExperiments)+lastTenData.getAverageSum(numExperiments)));
+        System.out.println("\n");
 
         //Average sum of the elements ???
 

@@ -8,8 +8,7 @@ public class Data {
     //for task 1 and 2
     public Data(ArrayList<Long> individualTimes, long totalTime, long totalSum){
         this.individualTimes = individualTimes;
-        //in Nano seconds we need to convert to seconds
-        this.totalTime = totalTime * (Math.pow(10,-9));
+        this.totalTime = totalTime; //this is stored in nano seconds
         this.totalSum = totalSum;
     }
 
