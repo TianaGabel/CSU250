@@ -1,6 +1,10 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main {
     private static volatile int v = 0;
@@ -18,6 +22,8 @@ public class Main {
         Data nonVolatileData;
         Data firstTenData;
         Data lastTenData;
+        Data treeSetData;
+        Data linkedListData;
 
         //TASK 1: Performance of programs with and without caching
         volatileData = task1(numExperiments,size,"Volatile");
@@ -45,20 +51,8 @@ public class Main {
         //Average sum of the elements ???
 
         //TASK 3
-        //Allocate TreeSet for size 
-        //Allocate LinkedList with size and fill with 0 to size
-
-        //experiments loop
-        //generate random number
-        //start timer
-        //TreeSet.contains(number)
-        //End timer
-
-        //start other timer
-        //Ll contains
-        //End other timer
-        //Record data to totals + file
-        //End experiments
+        treeSetData = task3(numExperiments,size,generateTreeSet(size));
+        linkedListData = task3(numExperiments,size,generateLinkedList(size));
 
     }
 
@@ -149,6 +143,52 @@ public class Main {
                 totalTime += (endTime-startTime);
             }
         }
+        Data data = new Data(timeData,totalTime,totalSum);
+        return data;
+    }
+
+    public static TreeSet<Integer> generateTreeSet(int size){
+        //This generates a tree set of size size and filled with numbers 0 to size
+        TreeSet<Integer> unorderedList = new TreeSet<Integer>();
+        for (int i = 0; i < size; i++){
+            unorderedList.add(new Integer(i));
+        }
+        return unorderedList;
+    }
+
+    public static LinkedList<Integer> generateLinkedList(int size){
+        //This generates a linkedlist of size size and filled with those numbers
+        LinkedList<Integer> orderedList = new LinkedList<Integer>();
+        for (int i = 0; i < size; i++){
+            orderedList.add(new Integer(i));
+        }
+        return orderedList;
+    }
+
+    public static Data task3(int numExperiments, int size, Collection<Integer> numberSet){
+
+        //experiments loop
+        //generate random number
+        //start timer
+        //TreeSet.contains(number)
+        //End timer
+        //TODO THIS IS COPY PASTE FROM AN OLD METHOD!!!!
+        Long totalTime = (long)0;
+        Long totalSum = (long)0;
+        ArrayList<Long> timeData = new ArrayList<>();
+        //Experiment counter
+            for (int i = 0; i < numExperiments; i++){
+                //Start timer
+                long endTime;
+                long startTime = System.nanoTime();
+                //Access first 10%
+                //TODO
+
+                //Stop timer
+                endTime = System.nanoTime();
+                timeData.add(new Long(endTime-startTime));
+                totalTime += (endTime-startTime);
+            }
         Data data = new Data(timeData,totalTime,totalSum);
         return data;
     }
