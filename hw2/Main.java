@@ -24,8 +24,8 @@ public class Main {
         Data linkedListData;
 
         //TASK 1: Performance of programs with and without caching
-        volatileData = task1(numExperiments,size,"Volatile");
-        nonVolatileData = task1(numExperiments,size,"Non-Volatile");
+        volatileData = task1Volatile(numExperiments,size);
+        nonVolatileData = task1NonVolatile(numExperiments,size);
 
         System.out.println("Task 1");
         System.out.println("Regular:  " + (nonVolatileData.getAverageTime(numExperiments) * (Math.pow(10,-9))) + " seconds");
@@ -57,7 +57,7 @@ public class Main {
 
     }
 
-    public static Data task1(int numExperiments, int size, String loopVar){
+    public static Data task1Volatile(int numExperiments, int size){
         //loop
         long totalSum = 0;
         long totalTime = 0;
@@ -69,29 +69,49 @@ public class Main {
             long startTime = 0;
             long runningTotal = 0;
             //v must be declared as part of the class
-            if (loopVar.equals("Volatile")){
-                startTime = System.nanoTime();
-                while(v < size){
-                    //running total of addition and subtraction operations using the loop variable
-                    if(v % 2 == 0){
-                        runningTotal += v;
-                    } else {
-                        runningTotal -= v;
-                    }
-                    v++;
+            v=0;
+            startTime = System.nanoTime();
+            while(v < size){
+                //running total of addition and subtraction operations using the loop variable
+                if((v % 2) == 0){
+                    runningTotal += v;
+                } else {
+                    runningTotal -= v;
                 }
-            } else if (loopVar.equals("Non-Volatile")){
-                int i = 0;
-                startTime = System.nanoTime();
-                while(i < size){
-                    //running total of addition and subtraction operations using the loop variable
-                    if(i % 2 == 0){
-                        runningTotal += i;
-                    } else {
-                        runningTotal -= i;
-                    }
-                    i++;
+                v++;
+            }
+            //End Timer
+            endTime = System.nanoTime();
+            timeData.add(new Long(endTime-startTime)); //Store individual data
+            totalTime += (endTime-startTime); // in Nano seconds
+            totalSum += runningTotal;
+        }
+        Data data = new Data(timeData,totalTime,totalSum);
+        return data;
+    }
+
+    public static Data task1NonVolatile(int numExperiments, int size){
+        //loop
+        long totalSum = 0;
+        long totalTime = 0;
+        ArrayList<Long> timeData = new ArrayList<Long>();
+        //Experiment counter
+        for (int j = 0; j < numExperiments; j++){
+            //Start timer
+            long endTime;
+            long startTime = 0;
+            long runningTotal = 0;
+            int i = 0;
+            //v must be declared as part of the class
+            startTime = System.nanoTime();
+            while(i < size){
+                //running total of addition and subtraction operations using the loop variable
+                if((i % 2) == 0){
+                    runningTotal += i;
+                } else {
+                    runningTotal -= i;
                 }
+                i++;
             }
             //End Timer
             endTime = System.nanoTime();

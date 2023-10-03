@@ -36,6 +36,6 @@ public class Data {
     }
 
     public double getAverageSum(int numExperiments){
-        return (double) this.totalSum / numExperiments;
+        return (double) this.totalSum / numExperiments * 1.0;
     }
 }
