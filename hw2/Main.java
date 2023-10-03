@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class Main {
@@ -13,7 +11,7 @@ public class Main {
         //TODO delete this later
         args = new String[3];
         args[0] = "2500000";
-        args[1] = "1";
+        args[1] = "20";
         args[2] = "42";
         int size = Integer.parseInt(args[0]);
         int numExperiments = Integer.parseInt(args[1]);
@@ -32,27 +30,30 @@ public class Main {
         System.out.println("Task 1");
         System.out.println("Regular:  " + (nonVolatileData.getAverageTime(numExperiments) * (Math.pow(10,-9))) + " seconds");
         System.out.println("Volatile: " + (volatileData.getAverageTime(numExperiments) * (Math.pow(10,-9))) + " seconds");
-        System.out.println("Avg regular sum: " + nonVolatileData.getAverageSum(numExperiments));
+        System.out.println("Avg regular sum:  " + nonVolatileData.getAverageSum(numExperiments));
         System.out.println("Avg volatile sum: " + volatileData.getAverageSum(numExperiments));
         System.out.println("\n");
 
         //TASK 2
         Integer[] randomArray = generateRandomArray(size, seed);
         //populate the array with random numbers
-        firstTenData = task2(numExperiments, randomArray, "First Ten");
-        lastTenData = task2(numExperiments, randomArray,"Last Ten");
+        firstTenData = task2FirstTen(numExperiments, randomArray);
+        lastTenData = task2LastTen(numExperiments, randomArray);
 
+        System.out.println(firstTenData.getTotalTime() + "" + lastTenData.getTotalTime());
         System.out.println("Task 2");
-        System.out.println("Avg time to access known element:  ");
-        System.out.println("Avg time to access random element: ");
+        System.out.println("Avg time to access known element:  " + firstTenData.getAverageTime(numExperiments) + " nanoseconds");
+        System.out.println("Avg time to access random element: " + lastTenData.getAverageTime(numExperiments) + " nanoseconds");
         System.out.println("Sum: " + (firstTenData.getAverageSum(numExperiments)+lastTenData.getAverageSum(numExperiments)));
         System.out.println("\n");
-
-        //Average sum of the elements ???
 
         //TASK 3
         treeSetData = task3(numExperiments,size,generateTreeSet(size));
         linkedListData = task3(numExperiments,size,generateLinkedList(size));
+
+        System.out.println("Task 2");
+        System.out.println("Avg time to find in set:  " + treeSetData.getAverageTime(numExperiments) + " nanoseconds");
+        System.out.println("Avg time to find in list: " + linkedListData.getAverageTime(numExperiments) + " nanoseconds");
 
     }
 
@@ -111,37 +112,53 @@ public class Main {
         return ray;
     }
 
-    public static Data task2(int numExperiments, Integer[] randArray, String accessPart){
+    public static Data task2FirstTen(int numExperiments, Integer[] randArray){
         Long totalTime = (long)0;
         Long totalSum = (long)0;
         ArrayList<Long> timeData = new ArrayList<>();
         //Experiment counter
-        if (accessPart.equals("First Ten")){
-            for (int j = 0; j < numExperiments; j++){
-                //Start timer
-                long endTime;
-                long startTime = System.nanoTime();
-                //Access first 10%
-                //TODO
-
-                //Stop timer
-                endTime = System.nanoTime();
-                timeData.add(new Long(endTime-startTime));
-                totalTime += (endTime-startTime);
+        for (int j = 0; j < numExperiments; j++){
+            //Rather than using integer division, to account for smaller numbers
+            int endIndex = (int)Math.round(randArray.length/10.0);
+            long sum = 0;
+            //Start timer
+            long endTime;
+            long startTime = System.nanoTime();
+            //Access element in first 10%
+            for(int i=0; i<endIndex;i++){
+                sum += randArray[i];
             }
-        }else if (accessPart.equals("Last Ten")){
-            for (int j = 0; j < numExperiments; j++){
-                //Start timer
-                long endTime;
-                long startTime = System.nanoTime();
-                //Access element in last 10%
-                //TODO
+            //Stop timer
+            endTime = System.nanoTime();
+            timeData.add(new Long(endTime-startTime));
+            totalTime += (endTime-startTime)/endIndex; //This is the average to access one element
+            totalSum += sum;
+        }
+        Data data = new Data(timeData,totalTime,totalSum);
+        return data;
+    }
 
-                //Stop timer
-                endTime = System.nanoTime();
-                timeData.add(new Long(endTime-startTime));
-                totalTime += (endTime-startTime);
-            }
+    public static Data task2LastTen(int numExperiments, Integer[] randArray){
+        Long totalTime = (long)0;
+        Long totalSum = (long)0;
+        ArrayList<Long> timeData = new ArrayList<>();
+        Random rand = new Random();
+        //Experiment counter
+        for (int j = 0; j < numExperiments; j++){
+            int endIndex = (int)Math.round(randArray.length/10.0);
+            int randomIndex = (int)(randArray.length * 0.9) + rand.nextInt(endIndex);
+            long sum = 0;
+            //Start timer
+            long endTime;
+            long startTime = System.nanoTime();
+            //Access element in last 10%
+            sum = randArray[randomIndex];
+
+            //Stop timer
+            endTime = System.nanoTime();
+            timeData.add(new Long(endTime-startTime));
+            totalTime += (endTime-startTime);
+            totalSum += sum;
         }
         Data data = new Data(timeData,totalTime,totalSum);
         return data;
@@ -166,30 +183,29 @@ public class Main {
     }
 
     public static Data task3(int numExperiments, int size, Collection<Integer> numberSet){
-
-        //experiments loop
         //generate random number
         //start timer
         //TreeSet.contains(number)
         //End timer
-        //TODO THIS IS COPY PASTE FROM AN OLD METHOD!!!!
         Long totalTime = (long)0;
-        Long totalSum = (long)0;
         ArrayList<Long> timeData = new ArrayList<>();
+        Random rand = new Random();
         //Experiment counter
-            for (int i = 0; i < numExperiments; i++){
-                //Start timer
-                long endTime;
-                long startTime = System.nanoTime();
-                //Access first 10%
-                //TODO
+        for (int i = 0; i < numExperiments; i++){
+            //Get random number
+            Integer j = rand.nextInt(size);
+            //Start timer
+            long endTime;
+            long startTime = System.nanoTime();
 
-                //Stop timer
-                endTime = System.nanoTime();
-                timeData.add(new Long(endTime-startTime));
-                totalTime += (endTime-startTime);
-            }
-        Data data = new Data(timeData,totalTime,totalSum);
+            numberSet.contains(j);
+            
+            //Stop timer
+            endTime = System.nanoTime();
+            timeData.add(new Long(endTime-startTime));
+            totalTime += (endTime-startTime);
+        }
+        Data data = new Data(timeData,totalTime);
         return data;
     }
 }
