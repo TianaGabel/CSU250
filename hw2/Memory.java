@@ -4,15 +4,15 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeSet;
 
-public class Main {
+public class Memory {
     private static volatile int v = 0;
 
     public static void main(String[] args){
         //TODO delete this later
-        args = new String[3];
-        args[0] = "2500000";
-        args[1] = "20";
-        args[2] = "42";
+        //args = new String[3];
+        //args[0] = "2500000";
+        //args[1] = "20";
+        //args[2] = "42";
         int size = Integer.parseInt(args[0]);
         int numExperiments = Integer.parseInt(args[1]);
         Long seed = Long.parseLong(args[2]);
@@ -50,7 +50,7 @@ public class Main {
         treeSetData = task3(numExperiments,size,generateTreeSet(size));
         linkedListData = task3(numExperiments,size,generateLinkedList(size));
 
-        System.out.println("Task 2");
+        System.out.println("Task 3");
         System.out.println("Avg time to find in set:  " + treeSetData.getAverageTime(numExperiments) + " nanoseconds");
         System.out.println("Avg time to find in list: " + linkedListData.getAverageTime(numExperiments) + " nanoseconds");
 
@@ -59,13 +59,13 @@ public class Main {
     public static Data task1Volatile(int numExperiments, int size){
         //loop
         long totalSum = 0;
-        long totalTime = 0;
+        double totalTime = 0;
         ArrayList<Long> timeData = new ArrayList<Long>();
         //Experiment counter
         for (int j = 0; j < numExperiments; j++){
             //Start timer
-            long endTime;
-            long startTime = 0;
+            double endTime;
+            double startTime = 0;
             long runningTotal = 0;
             //v must be declared as part of the class
             v=0;
@@ -81,7 +81,7 @@ public class Main {
             }
             //End Timer
             endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime)); //Store individual data
+            //timeData.add((endTime-startTime)); //Store individual data
             totalTime += (endTime-startTime); // in Nano seconds
             totalSum += runningTotal;
         }
@@ -92,13 +92,13 @@ public class Main {
     public static Data task1NonVolatile(int numExperiments, int size){
         //loop
         long totalSum = 0;
-        long totalTime = 0;
+        double totalTime = 0;
         ArrayList<Long> timeData = new ArrayList<Long>();
         //Experiment counter
         for (int j = 0; j < numExperiments; j++){
             //Start timer
-            long endTime;
-            long startTime = 0;
+            double endTime;
+            double startTime = 0;
             long runningTotal = 0;
             int i = 0;
             //v must be declared as part of the class
@@ -114,7 +114,7 @@ public class Main {
             }
             //End Timer
             endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime)); //Store individual data
+            //timeData.add((endTime-startTime)); //Store individual data
             totalTime += (endTime-startTime); // in Nano seconds
             totalSum += runningTotal;
         }
@@ -132,7 +132,7 @@ public class Main {
     }
 
     public static Data task2FirstTen(int numExperiments, Integer[] randArray){
-        Long totalTime = (long)0;
+        Double totalTime = (double) 0;
         Long totalSum = (long)0;
         ArrayList<Long> timeData = new ArrayList<>();
         //Experiment counter
@@ -141,24 +141,26 @@ public class Main {
             int endIndex = (int)Math.round(randArray.length/10.0);
             long sum = 0;
             //Start timer
-            long endTime;
-            long startTime = System.nanoTime();
+            double endTime;
+            double startTime = System.nanoTime();
             //Access element in first 10%
-            for(int i=0; i<endIndex;i++){
+            for(int i=0; i< endIndex;i++){
                 sum += randArray[i];
             }
             //Stop timer
             endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime));
-            totalTime += (endTime-startTime)/endIndex; //This is the average to access one element
+            //timeData.add(new Long(endTime-startTime));
+            totalTime += (endTime-startTime)/ endIndex * 1.0; //This is the average to access one element
             totalSum += sum;
+            System.out.println(totalTime);
         }
+        //long transfer = totalTime.longValue();
         Data data = new Data(timeData,totalTime,totalSum);
         return data;
     }
 
     public static Data task2LastTen(int numExperiments, Integer[] randArray){
-        Long totalTime = (long)0;
+        double totalTime = (long)0;
         Long totalSum = (long)0;
         ArrayList<Long> timeData = new ArrayList<>();
         Random rand = new Random();
@@ -168,14 +170,14 @@ public class Main {
             int randomIndex = (int)(randArray.length * 0.9) + rand.nextInt(endIndex);
             long sum = 0;
             //Start timer
-            long endTime;
-            long startTime = System.nanoTime();
+            double endTime;
+            double startTime = System.nanoTime();
             //Access element in last 10%
             sum = randArray[randomIndex];
 
             //Stop timer
             endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime));
+            //timeData.add((endTime-startTime));
             totalTime += (endTime-startTime);
             totalSum += sum;
         }
@@ -202,11 +204,7 @@ public class Main {
     }
 
     public static Data task3(int numExperiments, int size, Collection<Integer> numberSet){
-        //generate random number
-        //start timer
-        //TreeSet.contains(number)
-        //End timer
-        Long totalTime = (long)0;
+        double totalTime = 0;
         ArrayList<Long> timeData = new ArrayList<>();
         Random rand = new Random();
         //Experiment counter
@@ -214,14 +212,14 @@ public class Main {
             //Get random number
             Integer j = rand.nextInt(size);
             //Start timer
-            long endTime;
-            long startTime = System.nanoTime();
+            double endTime;
+            double startTime = System.nanoTime();
 
             numberSet.contains(j);
             
             //Stop timer
             endTime = System.nanoTime();
-            timeData.add(new Long(endTime-startTime));
+            //timeData.add((endTime-startTime));
             totalTime += (endTime-startTime);
         }
         Data data = new Data(timeData,totalTime);
