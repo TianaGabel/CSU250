@@ -40,7 +40,6 @@ public class Main {
         firstTenData = task2FirstTen(numExperiments, randomArray);
         lastTenData = task2LastTen(numExperiments, randomArray);
 
-        System.out.println(firstTenData.getTotalTime() + "" + lastTenData.getTotalTime());
         System.out.println("Task 2");
         System.out.println("Avg time to access known element:  " + firstTenData.getAverageTime(numExperiments) + " nanoseconds");
         System.out.println("Avg time to access random element: " + lastTenData.getAverageTime(numExperiments) + " nanoseconds");
