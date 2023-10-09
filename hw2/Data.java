@@ -1,38 +1,24 @@
 import java.util.ArrayList;
 
 public class Data {
-    ArrayList<Long> individualTimes;
+    ArrayList<Double> individualTimes;
     double totalTime;
     long totalSum;
 
-    //for task 1 and 2
-    public Data(ArrayList<Long> individualTimes, long totalTime, long totalSum){
-        this.individualTimes = individualTimes;
-        this.totalTime = totalTime; //this is stored in nano seconds
-        this.totalSum = totalSum;
-    }
-
      //for task 1 and 2
-    public Data(ArrayList<Long> individualTimes, double totalTime, long totalSum){
+    public Data(ArrayList<Double> individualTimes, double totalTime, long totalSum){
         this.individualTimes = individualTimes;
         this.totalTime = totalTime; //this is stored in nano seconds
         this.totalSum = totalSum;
     }
 
     //for task 3
-    public Data(ArrayList<Long> individualTimes, long totalTime){
+    public Data(ArrayList<Double> individualTimes, double totalTime){
         this.individualTimes = individualTimes;
         this.totalTime = totalTime;
     }
 
-    //for task 3
-    public Data(ArrayList<Long> individualTimes, double totalTime){
-        this.individualTimes = individualTimes;
-        this.totalTime = totalTime;
-    }
-
-
-    public ArrayList<Long> getTimeData(){
+    public ArrayList<Double> getTimeData(){
         return individualTimes;
     }
 
