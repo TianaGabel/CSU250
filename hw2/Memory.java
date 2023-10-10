@@ -147,7 +147,6 @@ public class Memory {
             timeData.add((endTime-startTime));
             totalTime += (endTime-startTime)/ endIndex * 1.0; //This is the average to access one element
             totalSum += sum;
-            System.out.println(totalTime);
         }
         Data data = new Data(timeData,totalTime,totalSum);
         return data;
