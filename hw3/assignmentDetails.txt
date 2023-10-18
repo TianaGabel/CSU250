@@ -25,3 +25,18 @@
 
 
 //Socket programming
+ServerSocket listens for connection requests from clients, specifically used by server
+Socket send and receives data for clients
+
+Ip address specifies a host (apartment building)
+port specifies a process runnning on a host (apartment)
+called "Addressing"
+
+So mac address can be used without the ip address, but they are fixed, so we use ip and ports
+
+Useful tips
+ctrl-c terminate process
+timing will be the hard part
+ssh into 3 machines is in recitation 7
+
+mrw2
