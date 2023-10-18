@@ -1,0 +1,27 @@
+//This is the server(myserver)
+//Task one
+//check port between 1024 and 65535
+//create randomnumber generator
+
+//Task 2
+//connect to client
+//send number specifying number of messages expected from the client
+//send number for random number generator seed
+
+//Submission 2 (myclient)
+//This is the client
+//task 3
+//receive 2 numbers from the server
+//Then send that many messages back
+
+//Submission 3(first run server(maybe use while loop for waiting), then run client)
+//task 4
+//client to client
+//these messages must pass through the server
+
+//task 5
+//clients sum forwarded messsages and print out the sums
+
+
+
+//Socket programming
