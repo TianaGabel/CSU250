@@ -40,3 +40,6 @@ timing will be the hard part
 ssh into 3 machines is in recitation 7
 
 mrw2
+
+//Local ip address(same computer)
+127.0.0.1
