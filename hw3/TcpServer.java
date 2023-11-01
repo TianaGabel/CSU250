@@ -17,18 +17,30 @@ public class TcpServer {
         //Recitation 10
         int portNumber = Integer.MAX_VALUE;
         if(args.length == 1){
+            //TODO check if between 1024 and 65,535
             portNumber = Integer.parseInt(args[0]);
         }else {
             System.err.println("Incorrect Port Number Provided");
         }
 
+        //Check seed
+        //Check num of messages
+
         try {
             serverSocket = new ServerSocket(portNumber);
+            //TODO exception for in use port number should print exception.getMessage()
             System.out.println("Waiting for client request");
+
+
+            //TODO Generate random number using seed
 
             clientSocket = serverSocket.accept();
             System.out.println("Successfully connected to the client");
 
+
+            //TODO server sends 2 number to the client
+            //TODO number of messages expected 
+            //TODO first random number set up
 
             DataOutputToClient = new DataOutputStream(clientSocket.getOutputStream());
             DataOutputToClient.writeInt(100);
