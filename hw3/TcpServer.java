@@ -1,5 +1,6 @@
 
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -9,6 +10,7 @@ import java.net.UnknownHostException;
 public class TcpServer {
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
+    private static DataOutputStream DataOutputToClient;
 
     public static void main(String[] args){
 
@@ -26,6 +28,13 @@ public class TcpServer {
 
             clientSocket = serverSocket.accept();
             System.out.println("Successfully connected to the client");
+
+
+            DataOutputToClient = new DataOutputStream(clientSocket.getOutputStream());
+            DataOutputToClient.writeInt(100);
+            DataOutputToClient.flush();
+            System.out.println("Successfully send information to client");
+
         } catch(IOException e){
             System.out.println("Could not listen on port " + portNumber);
         }

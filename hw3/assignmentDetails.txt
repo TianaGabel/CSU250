@@ -41,5 +41,14 @@ ssh into 3 machines is in recitation 7
 
 mrw2
 
+
+Recitation 10
 //Local ip address(same computer)
-127.0.0.1
+127.0.0.1 num
+we can also use the name ie. ant or dover
+
+process
+
+Server accepts
+server passes it to outut buffer
+then flushes buffer
