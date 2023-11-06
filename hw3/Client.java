@@ -1,6 +1,7 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Random;
 
 public class Client {
     private static Socket socket;
@@ -14,17 +15,33 @@ public class Client {
             address = args[0];
             portNumber = Integer.parseInt(args[1]);
         }else{
-            //incorrect port number or ip provided
+            System.out.println("Incorrect number of arguments provided");
+            System.exit(0);
         }
-
-
 
         try{
             socket = new Socket(address,portNumber);
-            //connected to server
 
             inputData = new DataInputStream(socket.getInputStream());
-            System.out.println("Received info " + inputData.read());
+
+            //Recieve messages
+            int numMessages = inputData.readInt();
+            int seedNumber = inputData.readInt();
+
+            //initialize random number generator
+            Random r = new Random(seedNumber);
+
+            long senderSum = 0;
+            int currNum;
+            int numOfSentMessages = 0;
+            for(int i = 0; i < numMessages;i++){
+                currNum = r.nextInt();
+                //send number to the server
+                senderSum += currNum;
+                numOfSentMessages ++;
+            }
+
+
 
         } catch(IOException e){
             System.err.println("Fatal connection Error");

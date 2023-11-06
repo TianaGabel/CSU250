@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 public class TCPServer {
     private static ServerSocket serverSocket;
@@ -14,28 +15,29 @@ public class TCPServer {
 
     public static void main(String[] args){
 
-        //Recitation 10
+        //check arguements
         int portNumber = Integer.MAX_VALUE;
+        int seedNumber = 0;
+        int numMessages = 0;
         if(args.length == 3){
             portNumber = Integer.parseInt(args[0]);
             if (portNumber <= 1024 || portNumber > 65535){
                 System.out.println("Port number number must be between 1025 and 65535");
                 System.exit(0);
             }
+            seedNumber = Integer.parseInt(args[1]);
+            numMessages = Integer.parseInt(args[2]);
         }else {
             System.err.println("Incorrect number of arguments provided");
+            System.exit(0);
         }
 
-        //Check seed
-        //Check num of messages
+        //Generate random number
+        int randomNumber = generateRandomNumber(seedNumber);
 
         try {
             serverSocket = new ServerSocket(portNumber);
-            //TODO exception for in use port number should print exception.getMessage()
             System.out.println("Waiting for client request");
-
-
-            //TODO Generate random number using seed
 
             clientSocket = serverSocket.accept();
             System.out.println("Successfully connected to the client");
@@ -46,12 +48,18 @@ public class TCPServer {
             //TODO first random number set up
 
             DataOutputToClient = new DataOutputStream(clientSocket.getOutputStream());
-            DataOutputToClient.writeInt(100);
+            //number of expected messages
+            DataOutputToClient.writeInt(numMessages);
+            //first random number generated with seed
+            DataOutputToClient.writeInt(randomNumber);
             DataOutputToClient.flush();
             System.out.println("Successfully send information to client");
 
         } catch(IOException e){
             System.out.println("Could not listen on port " + portNumber);
+            e.getMessage();
+        } catch(Exception e){
+            e.getMessage();
         }
 
 
@@ -66,5 +74,10 @@ public class TCPServer {
         }
 
         
+    }
+
+    private static int generateRandomNumber(long seed) {
+        Random rand =  new Random(seed);
+        return rand.nextInt();
     }
 }
