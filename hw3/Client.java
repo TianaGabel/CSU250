@@ -36,7 +36,7 @@ public class Client {
             int numOfSentMessages = 0;
             for(int i = 0; i < numMessages;i++){
                 currNum = r.nextInt();
-                //send number to the server
+                //send number to the server TODO
                 senderSum += currNum;
                 numOfSentMessages ++;
             }
