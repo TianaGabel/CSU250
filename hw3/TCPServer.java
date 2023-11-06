@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class TcpServer {
+public class TCPServer {
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
     private static DataOutputStream DataOutputToClient;
@@ -16,11 +16,14 @@ public class TcpServer {
 
         //Recitation 10
         int portNumber = Integer.MAX_VALUE;
-        if(args.length == 1){
-            //TODO check if between 1024 and 65,535
+        if(args.length == 3){
             portNumber = Integer.parseInt(args[0]);
+            if (portNumber <= 1024 || portNumber > 65535){
+                System.out.println("Port number number must be between 1025 and 65535");
+                System.exit(0);
+            }
         }else {
-            System.err.println("Incorrect Port Number Provided");
+            System.err.println("Incorrect number of arguments provided");
         }
 
         //Check seed
