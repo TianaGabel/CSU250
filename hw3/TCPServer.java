@@ -59,6 +59,8 @@ public class TCPServer {
             clientSocket2 = serverSocket.accept();
             System.out.println("Successfully connected to the clients");
 
+            System.out.println("Sending config");
+
             
             System.out.println(clientSocket1.getInetAddress().getHostName() + " " + randomNumber1);
             System.out.println(clientSocket2.getInetAddress().getHostName() + " " + randomNumber2);
