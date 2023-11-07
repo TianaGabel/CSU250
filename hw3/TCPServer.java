@@ -1,5 +1,6 @@
 
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,10 +11,21 @@ import java.util.Random;
 
 public class TCPServer {
     private static ServerSocket serverSocket;
-    private static Socket clientSocket;
+    private static ServerSocket serverSocket2;
+    private static Socket clientSocket1;
+    private static Socket clientSocket2;
     private static DataOutputStream DataOutputToClient;
 
     public static void main(String[] args){
+
+        try{
+            System.out.printf("IP Address: %s\n", InetAddress.getLocalHost());
+        } catch (UnknownHostException e){
+            e.printStackTrace(); //What would be the case this doesn't work
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //check arguements
         int portNumber = Integer.MAX_VALUE;
@@ -25,6 +37,7 @@ public class TCPServer {
                 System.out.println("Port number number must be between 1025 and 65535");
                 System.exit(0);
             }
+            System.out.println("Port Number " + portNumber);
             seedNumber = Integer.parseInt(args[1]);
             numMessages = Integer.parseInt(args[2]);
         }else {
@@ -33,27 +46,45 @@ public class TCPServer {
         }
 
         //Generate random number
-        int randomNumber = generateRandomNumber(seedNumber);
-
+        Random rand =  new Random(seedNumber);
+        int randomNumber1 = rand.nextInt();
+        int randomNumber2 = rand.nextInt();
+        
         try {
+            
             serverSocket = new ServerSocket(portNumber);
-            System.out.println("Waiting for client request");
+            System.out.println("Waiting for client");
 
-            clientSocket = serverSocket.accept();
-            System.out.println("Successfully connected to the client");
+            clientSocket1 = serverSocket.accept();
+            clientSocket2 = serverSocket.accept();
+            System.out.println("Successfully connected to the clients");
 
+            
+            System.out.println(clientSocket1.getInetAddress().getHostName() + " " + randomNumber1);
+            System.out.println(clientSocket2.getInetAddress().getHostName() + " " + randomNumber2);
 
-            //TODO server sends 2 number to the client
-            //TODO number of messages expected 
-            //TODO first random number set up
-
-            DataOutputToClient = new DataOutputStream(clientSocket.getOutputStream());
+            //Send 2 numbers
+            DataOutputToClient = new DataOutputStream(clientSocket1.getOutputStream());
             //number of expected messages
             DataOutputToClient.writeInt(numMessages);
             //first random number generated with seed
-            DataOutputToClient.writeInt(randomNumber);
+            DataOutputToClient.writeInt(randomNumber1);
             DataOutputToClient.flush();
-            System.out.println("Successfully send information to client");
+
+            DataOutputToClient = new DataOutputStream(clientSocket2.getOutputStream());
+            //number of expected messages
+            DataOutputToClient.writeInt(numMessages);
+            //first random number generated with seed
+            DataOutputToClient.writeInt(randomNumber2);
+            DataOutputToClient.flush();
+
+            System.out.println("Successfully sent information to client");
+
+            //Recieve numbers from client
+            DataInputStream inputData = new DataInputStream(clientSocket1.getInputStream());
+            for(int i = 0; i < numMessages; i++){
+            }
+
 
         } catch(IOException e){
             System.out.println("Could not listen on port " + portNumber);
@@ -61,6 +92,8 @@ public class TCPServer {
         } catch(Exception e){
             e.getMessage();
         }
+
+
 
 
         //This is from recitation 9
@@ -76,8 +109,4 @@ public class TCPServer {
         
     }
 
-    private static int generateRandomNumber(long seed) {
-        Random rand =  new Random(seed);
-        return rand.nextInt();
-    }
 }

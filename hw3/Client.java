@@ -1,4 +1,5 @@
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
@@ -27,21 +28,39 @@ public class Client {
             //Recieve messages
             int numMessages = inputData.readInt();
             int seedNumber = inputData.readInt();
+            
 
             //initialize random number generator
             Random r = new Random(seedNumber);
+            System.out.println("Received config");
+            System.out.println("number of messages = " + numMessages);
+            System.out.println("seed = " + seedNumber);
 
+            /* 
             long senderSum = 0;
+            long receiverSum = 0;
             int currNum;
+            int receivedNum;
             int numOfSentMessages = 0;
+            int numOfReceivedMessages = 0;
+            DataOutputStream outputData = new DataOutputStream(socket.getOutputStream());
             for(int i = 0; i < numMessages;i++){
+                //Sends message
                 currNum = r.nextInt();
-                //send number to the server TODO
+                outputData.writeInt(currNum);
+                outputData.flush();
                 senderSum += currNum;
                 numOfSentMessages ++;
+
+                //TODO this does not work at this moment
+                //receives message
+                receivedNum = inputData.readInt();
+                System.out.println(receivedNum);
+                receiverSum += receivedNum;
+                numOfReceivedMessages++;
             }
 
-
+            */
 
         } catch(IOException e){
             System.err.println("Fatal connection Error");
