@@ -80,10 +80,12 @@ public class TCPServer {
 
             System.out.println("Successfully sent information to client");
 
+            /* future for submission 2
             //Recieve numbers from client
             DataInputStream inputData = new DataInputStream(clientSocket1.getInputStream());
             for(int i = 0; i < numMessages; i++){
             }
+            */
 
 
         } catch(IOException e){
@@ -92,21 +94,5 @@ public class TCPServer {
         } catch(Exception e){
             e.getMessage();
         }
-
-
-
-
-        //This is from recitation 9
-        try{
-            System.out.printf("Ip address:%s\n", InetAddress.getLocalHost());
-        } catch (UnknownHostException e){
-            e.printStackTrace(); //What would be the case this doesn't work
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        
     }
-
 }
