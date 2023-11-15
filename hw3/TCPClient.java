@@ -36,7 +36,7 @@ public class TCPClient {
             System.out.println("number of messages = " + numMessages);
             System.out.println("seed = " + seedNumber);
 
-            /* 
+            /*
             long senderSum = 0;
             long receiverSum = 0;
             int currNum;
@@ -44,6 +44,7 @@ public class TCPClient {
             int numOfSentMessages = 0;
             int numOfReceivedMessages = 0;
             DataOutputStream outputData = new DataOutputStream(socket.getOutputStream());
+            System.out.println("Starting to send messages to server...");
             for(int i = 0; i < numMessages;i++){
                 //Sends message
                 currNum = r.nextInt();
@@ -54,14 +55,16 @@ public class TCPClient {
 
                 //TODO this does not work at this moment
                 //receives message
-                receivedNum = inputData.readInt();
-                System.out.println(receivedNum);
-                receiverSum += receivedNum;
-                numOfReceivedMessages++;
+                //receivedNum = inputData.readInt();
+                //System.out.println(receivedNum);
+                //receiverSum += receivedNum;
+                //numOfReceivedMessages++;
             }
+            System.out.println("Finished sending messages to server.");
+            System.out.println("Total messages sent: " + numOfSentMessages);
+            System.out.println("Sum of messages sent: " + senderSum);
 
             */
-
         } catch(IOException e){
             System.err.println("Fatal connection Error");
             e.printStackTrace();
