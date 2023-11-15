@@ -36,7 +36,7 @@ public class TCPClient {
             System.out.println("number of messages = " + numMessages);
             System.out.println("seed = " + seedNumber);
 
-            /*
+            
             long senderSum = 0;
             long receiverSum = 0;
             int currNum;
@@ -64,7 +64,7 @@ public class TCPClient {
             System.out.println("Total messages sent: " + numOfSentMessages);
             System.out.println("Sum of messages sent: " + senderSum);
 
-            */
+            
         } catch(IOException e){
             System.err.println("Fatal connection Error");
             e.printStackTrace();
