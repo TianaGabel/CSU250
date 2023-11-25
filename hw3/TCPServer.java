@@ -77,13 +77,13 @@ public class TCPServer {
             System.out.println("Finished Listening for client messages.");
             System.out.println(clientSocket1.getInetAddress().getHostName());
             System.out.println("\tMessages received: " + client1Messages.size());
-            int sum1 = 0;
+            long sum1 = 0;
             for (int i: client1Messages) {sum1 += i;}
             System.out.println("\tSum received: " + sum1);
 
             System.out.println(clientSocket2.getInetAddress().getHostName());
             System.out.println("\tMessages received: " + client2Messages.size());
-            int sum2 = 0;
+            long sum2 = 0;
             for (int i: client2Messages) {sum2 += i;}
             System.out.println("\tSum received: " + sum2);
 
