@@ -1,5 +1,6 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Random;
@@ -8,7 +9,7 @@ public class TCPClient {
     private static Socket socket;
     private static DataInputStream inputData;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         String address = null;
         int portNumber = Integer.MAX_VALUE;
@@ -55,11 +56,15 @@ public class TCPClient {
             System.out.println("Total messages sent: " + numOfSentMessages);
             System.out.println("Sum of messages sent: " + senderSum);
 
+            //TODO if this causes problems then cut it
+            if (inputData.available() < 1){
+                throw new EOFException();
+            }
             System.out.println("Starting to listen for messages from server...");
-            //TODO see if this counts as hard coding
-            for (int i = 0; i < numMessages; i++){
+            // TODO see if this counts as hard coding
+            for (int i = 0; i < numMessages; i++) {
                 receivedNum = inputData.readInt();
-                //TODO for testing
+                // TODO for testing
                 System.out.println(receivedNum);
                 receiverSum += receivedNum;
                 numOfReceivedMessages++;
@@ -68,6 +73,9 @@ public class TCPClient {
             System.out.println("Total messages received: " + numOfReceivedMessages);
             System.out.println("Sum of messages received: " + receiverSum);
 
+        } catch (EOFException eof) {
+            // This is case submission 2 server is used
+            inputData.close();
         } catch (IOException e) {
             System.err.println("Fatal connection Error");
             e.printStackTrace();
