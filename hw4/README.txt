@@ -1,3 +1,5 @@
+MAKE SURE TO ASK ABOUT PACKAGES!!!!
+
 insert operation
 -insert num and curr time
 remove operation 

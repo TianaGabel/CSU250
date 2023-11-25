@@ -10,6 +10,7 @@ public class BinaryTreeDriverCode {
     public static ArrayList<Integer> nodesToRemove;
     public static ArrayList<Integer> nodesToGet;
     public static TreeStructure tree;
+    public static Tree expectedTree;
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         nodesToGet = new ArrayList<>();
@@ -34,6 +35,7 @@ public class BinaryTreeDriverCode {
             outputGetNodes(nodesToGet, tree);
         } catch (Exception e) {
             System.out.println("Not cool dude");
+            e.printStackTrace();
         }
     }
 

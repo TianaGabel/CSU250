@@ -1,5 +1,3 @@
-package hw4;
-
 public interface TreeStructure {
     public void insert(Integer num);
 
