@@ -56,16 +56,10 @@ public class TCPClient {
             System.out.println("Total messages sent: " + numOfSentMessages);
             System.out.println("Sum of messages sent: " + senderSum);
 
-            //TODO if this causes problems then cut it
-            // //if (inputData.available() < 1){
-            //     throw new EOFException();
-            // }
             System.out.println("Starting to listen for messages from server...");
             // TODO see if this counts as hard coding
             for (int i = 0; i < numMessages; i++) {
                 receivedNum = inputData.readInt();
-                // TODO for testing
-                System.out.println(receivedNum);
                 receiverSum += receivedNum;
                 numOfReceivedMessages++;
             }
