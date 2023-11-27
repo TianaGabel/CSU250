@@ -57,7 +57,6 @@ public class TCPClient {
             System.out.println("Sum of messages sent: " + senderSum);
 
             System.out.println("Starting to listen for messages from server...");
-            // TODO see if this counts as hard coding
             for (int i = 0; i < numMessages; i++) {
                 receivedNum = inputData.readInt();
                 receiverSum += receivedNum;
@@ -69,6 +68,7 @@ public class TCPClient {
 
         } catch (EOFException eof) {
             // This is case submission 2 server is used
+            System.err.println("End of Final reached");
             inputData.close();
         } catch (IOException e) {
             System.err.println("Fatal connection Error");

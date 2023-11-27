@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class TCPServer {
     private static ServerSocket serverSocket;
-    private static ServerSocket serverSocket2;
     private static Socket clientSocket1;
     private static Socket clientSocket2;
     private static DataOutputStream DataOutputToClient;
@@ -100,7 +99,6 @@ public class TCPServer {
 
     private static ArrayList<Integer> recieveMessages(Socket clientSocket) throws IOException {
         Integer receivedNum;
-        Integer receiverSum;
         ArrayList<Integer> receivedNumbers = new ArrayList<>();
         DataInputToClient = new DataInputStream(clientSocket.getInputStream());
         for (int i = 0; i < numMessages; i++) {
