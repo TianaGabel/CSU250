@@ -1,7 +1,6 @@
 import java.time.LocalTime;
 
 public class Node {
-    //TODO what data type should I use there.
     private Long timeCreated;
     private int num;
     public Node leftChild;

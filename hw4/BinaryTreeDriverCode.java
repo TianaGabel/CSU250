@@ -5,12 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class BinaryTreeDriverCode {
     public static ArrayList<Integer> nodesToRemove;
     public static ArrayList<Integer> nodesToGet;
     public static TreeStructure tree;
-    public static Tree expectedTree;
+    public static TreeMap expectedTree;
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         nodesToGet = new ArrayList<>();
@@ -56,10 +57,6 @@ public class BinaryTreeDriverCode {
             line = bufferedReader.readLine();
         }
         bufferedReader.close();
-    }
-
-    public static TreeStructure setupTestTree() {
-        return null;
     }
 
     public static void outputGetNodes(ArrayList<Integer> nodesToGet, TreeStructure tree) {
