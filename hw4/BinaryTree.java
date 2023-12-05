@@ -33,6 +33,63 @@ public class BinaryTree implements TreeStructure {
 
     @Override
     public Boolean remove(Integer num) {
+        Node currNode = root;
+        Node parentNode = root;
+        while (currNode != null){
+            if (num < currNode.getNum()) {
+                parentNode = currNode;
+                currNode = currNode.leftChild;
+            } else if (num > currNode.getNum()) {
+                parentNode = currNode;
+                currNode = currNode.rightChild;
+            } else {
+                break;
+            }
+        }
+                //We found the node we're looking to remove
+                
+                if((currNode.leftChild == null) && (currNode.rightChild == null)){
+                    //Case no children
+                    if (parentNode.equals(root)) {
+                        root = null;
+                        return true;
+                    }
+                    if (num < parentNode.leftChild.getNum()){
+                        parentNode.leftChild = null;
+                        return true;
+                    } else {
+                        parentNode.rightChild = null;
+                    }
+                } else if (currNode.leftChild == null){
+                    if (parentNode.leftChild.getNum() == num){
+                        parentNode.leftChild = currNode.rightChild;
+                    } else {
+                        parentNode.rightChild = currNode.rightChild;
+                    }
+                    return true;
+                } else if(currNode.rightChild == null){
+                    if (parentNode.leftChild.getNum() == num){
+                        parentNode.leftChild = currNode.leftChild;
+                    } else {
+                        parentNode.rightChild = currNode.leftChild;
+                    }
+                    return true;
+                } else {
+                    Node successor = currNode.rightChild;
+                    while (successor.leftChild != null){
+                        successor = successor.leftChild;
+                    }
+                    //Update parent
+                    if (parentNode.leftChild.getNum() == num){
+                        parentNode.leftChild = successor;
+                    } else {
+                        parentNode.rightChild = successor;
+                    }
+                    //update new children
+                    successor.leftChild = currNode.leftChild;
+                    successor.rightChild = currNode.rightChild;
+                    return true;
+                }         
         return false;
     }
 
@@ -60,9 +117,9 @@ public class BinaryTree implements TreeStructure {
     private Integer maxDepth(Node n){
         //TODO this is done
         if (n == null){
-            return 1;
+            return 0;
         }
-        return Math.max(maxDepth(n.leftChild), maxDepth(n.rightChild));
+        return Math.max(maxDepth(n.leftChild), maxDepth(n.rightChild)) + 1;
     }
 
     @Override
@@ -73,9 +130,9 @@ public class BinaryTree implements TreeStructure {
 
     private Integer minDepth(Node n){
         if (n == null){
-            return 1;
+            return 0;
         }
-        return Math.min(maxDepth(n.leftChild), maxDepth(n.rightChild));
+        return Math.min(minDepth(n.leftChild), minDepth(n.rightChild))+ 1;
     }
 
     // implements treeStructure interface
